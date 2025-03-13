@@ -1,3 +1,4 @@
+# Optimal Approach: Dynamic Programming (Tabulation)
 class Solution:
     def knapsack(self, W, val, wt):
         n = len(val)
@@ -11,3 +12,17 @@ class Solution:
                     dp[i][w] = dp[i - 1][w]
 
         return dp[n][W]  # Maximum value for given capacity
+
+
+
+# Bonus Approach: Optimized Space Approach (O(W) Space Complexity)
+class Solution:
+    def knapsack(self, W, val, wt):
+        n = len(val)
+        dp = [0] * (W + 1)
+
+        for i in range(n):
+            for w in range(W, wt[i] - 1, -1):  # Traverse backwards to avoid overwriting previous row values
+                dp[w] = max(dp[w], val[i] + dp[w - wt[i]])
+
+        return dp[W]
